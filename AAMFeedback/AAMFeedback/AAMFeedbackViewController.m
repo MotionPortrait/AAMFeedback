@@ -307,6 +307,14 @@ static BOOL _alwaysUseMainBundle = NO;
     if (![[self class] isAvailable]) {
         return;
     }
+    if (self.descriptionTextView.text.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                             initWithTitle:NSLocalizedStringFromTableInBundle(@"AAMFeedbackNoMessageAlertTitle", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil)
+                             message:NSLocalizedStringFromTableInBundle(@"AAMFeedbackNoMessageAlertDescription", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil)
+                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
     MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
     mailComposeViewController.mailComposeDelegate = self;
     [mailComposeViewController setToRecipients:self.toRecipients];

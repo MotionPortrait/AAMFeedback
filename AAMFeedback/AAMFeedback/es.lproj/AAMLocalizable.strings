@@ -11,6 +11,8 @@
 
 "AAMFeedbackButtonMail" = "Mail";
 "AAMFeedbackDescriptionPlaceholder" = "Por favor, escriba los detalles.";
+"AAMFeedbackNoMessageAlertTitle" = "No Message";
+"AAMFeedbackNoMessageAlertDescription" = "Please enter your inquiry";
 
 //Table Headers
 "AAMFeedbackTableHeaderTopics" = "Por favor, complete";

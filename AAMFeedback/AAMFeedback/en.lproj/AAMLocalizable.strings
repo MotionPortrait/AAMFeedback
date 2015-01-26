@@ -11,7 +11,9 @@
 "AAMFeedbackTopicsTitle" = "Topics";
 
 "AAMFeedbackButtonMail" = "Mail";
-"AAMFeedbackDescriptionPlaceholder" = "Please write for details.";
+"AAMFeedbackDescriptionPlaceholder" = "Your inquiry in detail";
+"AAMFeedbackNoMessageAlertTitle" = "No Message";
+"AAMFeedbackNoMessageAlertDescription" = "Please enter your inquiry";
 
 //Table Headers
 "AAMFeedbackTableHeaderTopics" = "Please Fill";
