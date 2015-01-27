@@ -11,8 +11,8 @@
 
 "AAMFeedbackButtonMail" = "メール";
 "AAMFeedbackDescriptionPlaceholder" = "詳細をお願いいたします。";
-"AAMFeedbackNoMessageAlertTitle" = "メッセージなし";
 "AAMFeedbackNoMessageAlertDescription" = "お問い合せ内容を入力してください";
+"AAMFeedbackNoAccountAlertDescription" = "メールアカウントが設定されていません";
 
 //Table Headers
 "AAMFeedbackTableHeaderTopics" = "入力事項";

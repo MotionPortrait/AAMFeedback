@@ -12,8 +12,8 @@
 
 "AAMFeedbackButtonMail" = "Mail";
 "AAMFeedbackDescriptionPlaceholder" = "Your inquiry in detail";
-"AAMFeedbackNoMessageAlertTitle" = "No Message";
 "AAMFeedbackNoMessageAlertDescription" = "Please enter your inquiry";
+"AAMFeedbackNoAccountAlertDescription" = "Mail Account not set";
 
 //Table Headers
 "AAMFeedbackTableHeaderTopics" = "Please Fill";

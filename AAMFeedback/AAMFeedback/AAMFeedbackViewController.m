@@ -38,6 +38,9 @@ static BOOL _alwaysUseMainBundle = NO;
 - (void)_updatePlaceholder;
 @end
 
+typedef enum {
+    NO_MESSAGE, NO_ACCOUNT, MAIL_FAILED
+} AAMFeedbackErrorType;
 
 @implementation AAMFeedbackViewController
 
@@ -305,14 +308,11 @@ static BOOL _alwaysUseMainBundle = NO;
 - (void)nextDidPress:(id) sender {
     [self.descriptionTextView resignFirstResponder];
     if (![[self class] isAvailable]) {
+        [self showAlertDialog: NO_ACCOUNT];
         return;
     }
     if (self.descriptionTextView.text.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc]
-                             initWithTitle:NSLocalizedStringFromTableInBundle(@"AAMFeedbackNoMessageAlertTitle", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil)
-                             message:NSLocalizedStringFromTableInBundle(@"AAMFeedbackNoMessageAlertDescription", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil)
-                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        [self showAlertDialog: NO_MESSAGE];
         return;
     }
     MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
@@ -352,9 +352,7 @@ static BOOL _alwaysUseMainBundle = NO;
     } else if (result == MFMailComposeResultSent) {
         self.isFeedbackSent = YES;
     } else if (result == MFMailComposeResultFailed) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedStringFromTableInBundle(@"AAMFeedbackMailDidFinishWithError", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil)
-                                                                    delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];
+        [self showAlertDialog:MAIL_FAILED];
     }
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -363,6 +361,37 @@ static BOOL _alwaysUseMainBundle = NO;
 - (void)feedbackTopicsViewController:(AAMFeedbackTopicsViewController *) feedbackTopicsViewController
                didSelectTopicAtIndex:(NSInteger) selectedIndex {
     _selectedTopicsIndex = selectedIndex;
+}
+
+
+- (void)showAlertDialog:(AAMFeedbackErrorType) type {
+    
+    NSString *alertMsg;
+
+    switch (type) {
+        case NO_ACCOUNT:
+            alertMsg = NSLocalizedStringFromTableInBundle(@"AAMFeedbackNoAccountAlertDescription", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil);
+            break;
+        case NO_MESSAGE:
+            alertMsg = NSLocalizedStringFromTableInBundle(@"AAMFeedbackNoMessageAlertDescription", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil);
+            break;
+        case MAIL_FAILED:
+            alertMsg = NSLocalizedStringFromTableInBundle(@"AAMFeedbackMailDidFinishWithError", @"AAMLocalizable", [AAMFeedbackViewController bundle], nil);
+            break;
+        default:
+            alertMsg = @"Unknown Error";
+    }
+    
+    // in iOS 8.0 or later, UIAlertView is deprecated
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:alertMsg preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:alertMsg delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alertView show];
+    }
+        
 }
 
 #pragma mark - Internal Info
