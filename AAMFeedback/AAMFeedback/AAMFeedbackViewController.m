@@ -455,11 +455,11 @@ typedef enum {
 }
 
 - (NSString *)_appName {
-    return [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey];
 }
 
 - (NSString *)_appVersion {
-    return [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
 }
 
 
